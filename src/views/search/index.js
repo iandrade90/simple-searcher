@@ -1,7 +1,6 @@
 import React from 'react';
 import SearchBox from './components/SearchBox/index';
 import './style.css';
-import data from '../../data/users.json';
 import SearchResult from './components/SearchResults/index';
 
 export default class Search extends React.Component {
@@ -12,9 +11,17 @@ export default class Search extends React.Component {
     this.handleCloseClick = this.handleCloseClick.bind(this);
     this.state = {
       isAtTop: false,
-      userData: data,
+      userData: [],
       results: [],
     }
+  }
+
+  componentDidMount(){
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(data => {
+	this.setState({userData: data})
+      })
   }
 
   handleSearchClick(searchText){
